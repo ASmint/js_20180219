@@ -11,7 +11,11 @@ export class Chat {
     }
 
     render(text = '') {
+        const authenticated = localStorage.getItem('authenticated');
+        const user = localStorage.getItem('user');
         this.el.innerHTML += template({
+            authenticated,
+            user,
             text
         });
     }

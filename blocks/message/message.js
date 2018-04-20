@@ -10,7 +10,8 @@ export class Message {
      }
 
     render() {
-        this.el.innerHTML = template();
+        const authenticated = localStorage.getItem('authenticated');
+        this.el.innerHTML = template({ authenticated });
 
         let form = this.el.querySelector('.message');
 
@@ -21,7 +22,7 @@ export class Message {
         });
 
         form.addEventListener('keydown', event => {
-            if (event.ctrlKey && event.keyCode === 13) {
+            if ((event.metaKey || event.ctrlKey) && event.keyCode === 13) {
                 event.preventDefault();
                 this.sendMessage();
                 console.log('send');

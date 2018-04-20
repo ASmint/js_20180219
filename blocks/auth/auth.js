@@ -18,27 +18,29 @@ export class Auth {
 
             const authenticated = name && password;
 
-            if (authenticated) {
-                console.log(`Hi, ${name}`);
-                localStorage.setItem('authenticated', true);
-
-                // тапорненько перерисовываем.
-                window.chat.render();
-                window.message.render();
-                this.render();
-
-                // запишем в виндоу юзера тоже думаю временно
-                localStorage.setItem('user', name);
-            }
-            else {
+            if (!authenticated) {
                 console.log('Authorization failed');
+                return;
             }
+
+            console.log(`Hi, ${name}`);
+            localStorage.setItem('authenticated', true);
+
+            // тапорненько перерисовываем.
+            window.chat.render();
+            window.message.render();
+            this.render();
+
+            // запишем в виндоу юзера тоже думаю временно
+            localStorage.setItem('user', name);
+
         });
 
     }
 
     render() {
-        this.el.innerHTML = template();
+        const authenticated = localStorage.getItem('authenticated');
+        this.el.innerHTML = template({ authenticated });
     }
 
 }
